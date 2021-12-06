@@ -35,6 +35,19 @@ class User implements InputFilterAwareInterface
         $this->verified = !empty($data ['verified']) ? $data ['verified'] : null;
     }
     
+    public function getArrayCopy()
+    {
+        return [
+            'id'       => $this->id,
+            'userName' => $this->userName,
+            'email'    => $this->email,
+            'password' => $this->password,
+            'regData'  => $this->regDate,
+            'active'   => $this->active,
+            'verified' => $this->verified,
+        ];
+    }
+    
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \DomainException(sprintf(
