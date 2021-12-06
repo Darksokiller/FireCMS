@@ -6,8 +6,7 @@ use User\Model\UserTable;
 use Laminas\View\Model\ViewModel;
 use User\Form\UserForm;
 use User\Model\User;
-use PhpParser\Node\Stmt\TryCatch;
-use Laminas\Http\Client\Adapter\Test;
+use User\Form\LoginForm;
 
 class UserController extends AbstractActionController
 {
@@ -134,6 +133,32 @@ class UserController extends AbstractActionController
     
     public function loginAction()
     {
+        $form = new LoginForm();
+        $form->get('submit')->setValue('Login');
+        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return ['form' => $form];
+        }
+        
+        $post = $request->getPost();
+        
+        $user = new User();
+        
+        $form->setInputFilter($user->getLoginFilter());
+        $form->setData($request->getPost());
+        
+        if (! $form->isValid()) {
+            return ['form' => $form];
+        }
+        
+        $user->exchangeArray($form->getData());
+        
+        if ($this->table->login($user))
+        {
+            $this->flashMessenager()->addInfoMessage('Welcome back!!');
+            $this->redirect()->toRoute('profile', ['id' => $user->id]);
+        }
         
     }
     
