@@ -1,18 +1,9 @@
 <?php
 namespace User;
 
-use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Router\Http\Segment;
 
 return [
-    
-    'controllers' => [
-        'factories' => [
-            Controller\UserController::class => InvokableFactory::class,
-        ],
-    ],
-    
-    
     // The following section is new and should be added to your file:
     'router' => [
         'routes' => [

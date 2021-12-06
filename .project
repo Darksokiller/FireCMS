@@ -19,4 +19,11 @@
 	<natures>
 		<nature>org.eclipse.php.core.PHPNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Db/data.sql</name>
+			<type>1</type>
+			<location>C:/Users/evan4/Downloads/firecms.sql</location>
+		</link>
+	</linkedResources>
 </projectDescription>
