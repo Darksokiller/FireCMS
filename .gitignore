@@ -6,3 +6,4 @@ data/cache/*
 phpunit.xml
 composer.lock
 .phpunit.result.cache
+.project
