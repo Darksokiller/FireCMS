@@ -28,4 +28,5 @@ return [
     'Laminas\Diactoros',
     'Application',
     'Album',
+    'User',
 ];

@@ -35,6 +35,12 @@
 				"module/Album/src/Controller",
 				"module/Album/src/Form",
 				"module/Album/src/Model"
+			],
+			"User\\" : [
+				"module/User/src",
+				"module/User/src/Controller",
+				"module/User/src/Form",
+				"module/User/src/Model"
 			]
 		}
 	},
