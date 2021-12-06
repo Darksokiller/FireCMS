@@ -6,6 +6,8 @@ use User\Model\UserTable;
 use Laminas\View\Model\ViewModel;
 use User\Form\UserForm;
 use User\Model\User;
+use PhpParser\Node\Stmt\TryCatch;
+use Laminas\Http\Client\Adapter\Test;
 
 class UserController extends AbstractActionController
 {
@@ -60,12 +62,69 @@ class UserController extends AbstractActionController
     
     public function editAction()
     {
+
+        $id = (int) $this->params()->fromRoute('id', 0);
         
+        if (0 === $id) {
+            return $this->redirect()->toRoute('user', ['action' => 'add']);
+        }
+        
+        try {
+            $user = $this->table->getUser($id);
+        } catch (\Exception $e) {
+            return $this->redirect()->toRoute('user', ['action' => 'index']);
+        }
+        
+        $form = new UserForm();
+        $form->bind($user);
+        $form->get('submit')->setAttribute('value', 'Edit');
+        
+        $request = $this->getRequest();
+        $viewData = ['id' => $id, 'form' => $form];
+        
+        if (! $request->isPost()) {
+            return $viewData;
+        }
+        
+        $form->setInputFilter($user->getInputFilter());
+        $form->setData($request->getPost());
+        
+        if (! $form->isValid()) {
+            return $viewData;
+        }
+        
+        try {
+            $this->table->saveUser($user);
+        } catch (\Exception $e) {
+        }
+        
+        return $this->redirect()->toRoute('user', ['action' => 'index']);
     }
     
     public function deleteAction()
     {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('user');
+        }
         
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+            
+            if ($del == 'Yes') {
+                $id = (int) $request->getPost('id');
+                $this->table->deleteUser($id);
+            }
+            
+            return $this->redirect()->toRoute('user');
+            
+        }
+        
+        return [
+            'id' => $id,
+            'user' => $this->table->getUser($id),
+        ];
     }
     
     public function logoutAction()
