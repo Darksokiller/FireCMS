@@ -120,7 +120,6 @@ class UserTable extends AbstractModel
     
     public function saveUser(User $user)
     {
-        
         $data = [
             'userName' => $user->userName,
             'email' => $user->email,

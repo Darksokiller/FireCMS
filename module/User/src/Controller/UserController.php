@@ -85,15 +85,12 @@ class UserController extends AbstractController
             return $viewData;
         }
         
-        $form->setInputFilter($user->getInputFilter());
+        $form->setInputFilter($user->getEditFilter());
         $form->setData($request->getPost());
         
-        //var_dump($viewData);
         if (! $form->isValid()) {
-            //die('edit');
             return $viewData;
         }
-        
         
         try {
             $this->table->saveUser($user);
