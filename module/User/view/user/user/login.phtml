@@ -1,0 +1,57 @@
+<?php
+
+$title = 'Login';
+$this->headTitle($title);
+?>
+<?php
+$form->setAttribute('action', $this->url('user', ['action' => 'login']));
+$form->prepare();
+
+//$this->headLink()->prependStylesheet($this->basePath('css/aurora.css'));
+// This provides a default CSS class and placeholder text for the title element:
+$user = $form->get('email');
+$user->setAttribute('class', 'form-control');
+$user->setAttribute('placeholder', 'Email');
+//$user->setAttribute('size', '100');
+$user->setAttribute('maxlength', '100');
+
+// This provides a default CSS class and placeholder text for the artist element:
+// $email = $form->get('email');
+// $email->setAttribute('class', 'form-control');
+// $email->setAttribute('placeholder', 'Email');
+// $email->setAttribute('maxlength', '320');
+
+$password = $form->get('password');
+$password->setAttribute('class', 'form-control');
+$password->setAttribute('placeholder', 'Password');
+
+// $conf_password = $form->get('conf_password');
+// $conf_password->setAttribute('class', 'form-control');
+// $conf_password->setAttribute('placeholder', 'Confirm Password');
+
+// This provides CSS classes for the submit button:
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+// $form->setAttribute('action', $this->url('user', ['action' => 'add']));
+// $form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+<?php // Wrap the elements in divs marked as form groups, and render the
+      // label, element, and errors separately within ?>
+<div class="form-group">
+    <?= $this->formLabel($user) ?>
+    <?= $this->formElement($user) ?>
+    <?= $this->formElementErrors()->render($user, ['class' => 'help-block']) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($password) ?>
+    <?= $this->formElement($password) ?>
+    <?= $this->formElementErrors()->render($password, ['class' => 'help-block']) ?>
+</div>
+
+<?php
+echo $this->formSubmit($submit);
+echo $this->form()->closeTag();

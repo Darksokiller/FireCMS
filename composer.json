@@ -25,7 +25,9 @@
 		"laminas/laminas-mvc-plugins" : "^1.1.0",
 		"laminas/laminas-mvc-middleware" : "^2.0.0",
 		"laminas/laminas-session" : "^2.10.0",
-		"laminas/laminas-di" : "^3.2.2"
+		"laminas/laminas-di" : "^3.2.2",
+		"laminas/laminas-permissions-acl": "^2.9",
+		"laminas/laminas-navigation": "^2.12"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -35,6 +37,12 @@
 				"module/Album/src/Controller",
 				"module/Album/src/Form",
 				"module/Album/src/Model"
+			],
+			"User\\" : [
+				"module/User/src",
+				"module/User/src/Controller",
+				"module/User/src/Form",
+				"module/User/src/Model"
 			]
 		}
 	},

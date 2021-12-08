@@ -1,0 +1,56 @@
+<?php
+// module/User/view/User/User/index.phtml:
+
+$title = 'System Users';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<p>
+    <span><a href="<?= $this->url('user', ['action' => 'add', 'id' => 0]) ?>">Add User</a></span>
+</p>
+
+<table class="table">
+<tr>
+    <th>User Name</th>
+    <th>Email</th>
+    <th>Account Status</th>
+    <th>Verification Status</th>
+    <th>Account Actions</th>
+</tr>
+<?php foreach ($users as $user) : ?>
+    <tr>
+        <td><?= $this->escapeHtml($user->userName) ?></td>
+        <td><?= $this->escapeHtml($user->email) ?></td>
+        <?php
+    if ((bool) $user->active) :
+        ?>
+		<td>Active</td>
+		<?php
+    else :
+        ?>
+		<td>Inactive</td>
+		<?php
+    endif;
+    ?>
+		
+        <?php
+    if ((bool) $user->verified) :
+        ?>
+        
+		<td>Verified</td>
+		<?php
+    else :
+        ?>
+		<td>Not Verified</td>
+		<?php
+    endif;
+    ?>
+		<td><a
+			href="<?= $this->url('user', ['action' => 'edit', 'id' => $user->id]) ?>">Edit</a>
+			<a
+			href="<?= $this->url('user', ['action' => 'delete', 'id' => $user->id]) ?>">Delete</a>
+		</td>
+	</tr>
+<?php endforeach; ?>
+
+</table>

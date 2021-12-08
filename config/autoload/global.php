@@ -20,4 +20,27 @@ return [
         'username' => 'Evan',
         'password' => 'Hank2001'
     ],
+    
+    'session' => [
+    //         'config' => [
+        //             'class' => \User\Model\UsersSessionConfig::class,
+        //         ],
+        //'storage' => \Laminas\Session\Storage\SessionArrayStorage::class,
+        'validators' => [
+            // \Laminas\Session\Validator\RemoteAddr::class,
+            //\Laminas\Session\Validator\HttpUserAgent::class,
+        ],
+    ],
+    'session_config' => [
+        'config_class' => User\Model\UsersSessionConfig::class,
+        //'remember_me_seconds' => 60,
+    ],
+    'session_storage' => [
+        'type' => \Laminas\Session\Storage\SessionArrayStorage::class,
+    ],
+    'session_validators' => [
+        \Laminas\Session\Validator\RemoteAddr::class,
+        \Laminas\Session\Validator\HttpUserAgent::class,
+    ],
+    
 ];
