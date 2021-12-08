@@ -121,6 +121,56 @@ class User implements RoleInterface, ResourceInterface, ProprietaryInterface
        
     }
     
+    public function getEditFilter()
+    {
+        if ($this->inputFilter) {
+            return $this->inputFilter;
+        }
+        
+        $inputFilter = new InputFilter();
+        
+        $inputFilter->add([
+            'name' => 'userName',
+            'required' => true,
+            'filters'  => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => StringLength::class,
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ]); 
+        
+        $inputFilter->add([
+            'name' => 'email',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => StringLength::class,
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ]);
+         
+        $this->inputFilter = $inputFilter;
+        return $this->inputFilter;
+    }
+    
     public function getInputFilter()
     {
         if ($this->inputFilter) {
