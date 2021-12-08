@@ -1,30 +1,30 @@
 <?php
 namespace User\Controller;
 
-use Laminas\Mvc\Controller\AbstractActionController;
 use User\Model\UserTable;
 use Laminas\View\Model\ViewModel;
 use User\Form\UserForm;
 use User\Model\User;
 use User\Form\LoginForm;
+use Application\Controller\AbstractController;
 
-class UserController extends AbstractActionController
+class UserController extends AbstractController
 {
+    
+    public $table;
     
     public function __construct(UserTable $table)
     {
         $this->table = $table;
     }
     
-    public function _init($config = ['Some\Class\name::class' => 'SomeObject']) {
-        parent::_init($config);
-    }
+//     public function _init($config = ['Some\Class\name::class' => 'SomeObject']) {
+//         parent::_init($config);
+//     }
     
     public function indexAction()
     {
-       return new ViewModel([
-           'users' => $this->table->fetchAll(),
-       ]); 
+       $this->view->setVariable('users', $this->table->fetchAll());
        
        return $this->view;
     }
@@ -88,9 +88,12 @@ class UserController extends AbstractActionController
         $form->setInputFilter($user->getInputFilter());
         $form->setData($request->getPost());
         
+        //var_dump($viewData);
         if (! $form->isValid()) {
+            //die('edit');
             return $viewData;
         }
+        
         
         try {
             $this->table->saveUser($user);
@@ -98,6 +101,7 @@ class UserController extends AbstractActionController
         }
         
         return $this->redirect()->toRoute('user', ['action' => 'index']);
+        
     }
     
     public function deleteAction()
@@ -128,7 +132,9 @@ class UserController extends AbstractActionController
     
     public function logoutAction()
     {
-        
+        $this->authService->clearIdentity();
+        $this->redirect()->toRoute('home');
+        //return $this->view;
     }
     
     public function loginAction()
@@ -137,13 +143,24 @@ class UserController extends AbstractActionController
         $form->get('submit')->setValue('Login');
         
         $request = $this->getRequest();
-        if (!$request->isPost()) {
+        
+        //var_dump($request);
+        
+        if (! $request->isPost()) {
             return ['form' => $form];
         }
-        
+        /** does the passwords match? if not show them the form again without the passwords
+         * eventually need to replace this with a chained filter or validator
+         */
+        // hash $2y$10$ncO3bgCRcWaCdeINBffN4eDBAuRnhden9eZd6hXQIttrGc1hjoFlO
         $post = $request->getPost();
         
+        //var_dump($post);
+        //die(__FILE__ . '::' . __LINE__);
+        
         $user = new User();
+        
+        //var_dump($this->table->login($user, $password = 'test'));
         
         $form->setInputFilter($user->getLoginFilter());
         $form->setData($request->getPost());
@@ -151,15 +168,27 @@ class UserController extends AbstractActionController
         if (! $form->isValid()) {
             return ['form' => $form];
         }
-        
+        //var_dump($form->getData());
+//         die(__FILE__ . '::' . __LINE__);
         $user->exchangeArray($form->getData());
-        
-        if ($this->table->login($user))
+        //var_dump($user);
+        //$this->table->login($user);
+        if($this->table->login($user))
         {
-            $this->flashMessenager()->addInfoMessage('Welcome back!!');
+            //die('login successful');
+            //$this->redirect()->toUrl('/user/profile/view/'. $user->id);
+            $this->flashMessenger()->addInfoMessage('Welcome back!!');
             $this->redirect()->toRoute('profile', ['id' => $user->id]);
         }
+        else {
+            return $this->redirect()->toUrl('/user/login-failure');
+        }
+        //return $this->redirect()->toRoute('user');
         
     }
-    
+
+    public function loginFailureAction()
+    {
+        return new ViewModel(['messages' => 'failed login']);
+    }
 }

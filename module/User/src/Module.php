@@ -5,6 +5,8 @@ use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Db\TableGateway\TableGateway;
+use Laminas\View\Model\ModelInterface;
+use Symfony\Component\Console\Helper\Table;
 
 class Module implements ConfigProviderInterface
 {
@@ -28,8 +30,21 @@ class Module implements ConfigProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new Model\User());
                     return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
                 },
-            ],
-        ];
+                
+                Model\ProfileTable::class => function ($container) {
+                    $tableGateway = $container->get(Model\ProfileTableGateway::class);
+                    return new Model\ProfileTable($tableGateway);
+                },
+                
+                Model\ProfileTableGateway::class => function ($container) {
+                    $dbAdapter = $container->get(AdapterInterface::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Model\Profile());
+                    return new TableGateway('profile', $dbAdapter, null, $resultSetPrototype);
+                }
+                
+                ],
+                ];
     }
     
     public function getControllerConfig()
@@ -39,9 +54,14 @@ class Module implements ConfigProviderInterface
                 Controller\UserController::class => function($container) {
                     return new Controller\UserController(
                         $container->get(Model\UserTable::class)
-                    );
+                        );
                 },
-            ],
-        ];
+                Controller\ProfileController::class => function($container) {
+                    return new Controller\ProfileController(
+                        $container->get(Model\UserTable::class)
+                        );
+                },   
+                ],
+                ];
     }
 }
