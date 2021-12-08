@@ -18,9 +18,9 @@ class UserController extends AbstractController
         $this->table = $table;
     }
     
-//     public function _init($config = ['Some\Class\name::class' => 'SomeObject']) {
-//         parent::_init($config);
-//     }
+    public function _init() {
+        $this->table->setAcl($this->acl);
+    }
     
     public function indexAction()
     {
@@ -64,40 +64,62 @@ class UserController extends AbstractController
 
         $id = (int) $this->params()->fromRoute('id', 0);
         
-        if (0 === $id) {
-            return $this->redirect()->toRoute('user', ['action' => 'add']);
-        }
-        
         try {
             $user = $this->table->getUser($id);
         } catch (\Exception $e) {
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
         
-        $form = new UserForm();
-        $form->bind($user);
-        $form->get('submit')->setAttribute('value', 'Edit');
-        
-        $request = $this->getRequest();
-        $viewData = ['id' => $id, 'form' => $form];
-        
-        if (! $request->isPost()) {
-            return $viewData;
+        switch ($this->acl->isAllowed($this->user, $user, $this->action)) {
+            case true:
+                
+                if (0 === $id) {
+                    return $this->redirect()->toRoute('user', ['action' => 'add']);
+                }
+                
+                // Retrieve the User with the specified id. Doing so raises
+                // an exception if the User is not found, which should result
+                // in redirecting to the landing page.
+                try {
+                    $user = $this->table->getUser($id);
+                } catch (\Exception $e) {
+                    return $this->redirect()->toRoute('user', ['action' => 'index']);
+                }
+                
+                $form = new UserForm();
+                $form->bind($user);
+                $form->get('submit')->setAttribute('value', 'Edit');
+                
+                $request = $this->getRequest();
+                $viewData = ['id' => $id, 'form' => $form];
+                
+                if (! $request->isPost()) {
+                    return $viewData;
+                }
+                
+                $form->setInputFilter($user->getEditFilter());
+                
+                $form->setData($request->getPost());
+                
+                if (! $form->isValid()) {
+                    return $viewData;
+                }
+                
+                try {
+                    $this->table->saveUser($user);
+                } catch (\Exception $e) {
+                }
+                
+                // Redirect to User list
+                return $this->redirect()->toRoute('user', ['action' => 'index']);
+                
+                break;
+            case false:
+                $this->flashMessenger()->addWarningMessage('You do not have the required permissions to edit other users');
+                $this->redirect()->toUrl('/forbidden');
+                //die('we do not have permission');
+                break;
         }
-        
-        $form->setInputFilter($user->getEditFilter());
-        $form->setData($request->getPost());
-        
-        if (! $form->isValid()) {
-            return $viewData;
-        }
-        
-        try {
-            $this->table->saveUser($user);
-        } catch (\Exception $e) {
-        }
-        
-        return $this->redirect()->toRoute('user', ['action' => 'index']);
         
     }
     

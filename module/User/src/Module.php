@@ -6,7 +6,6 @@ use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\View\Model\ModelInterface;
-use Symfony\Component\Console\Helper\Table;
 
 class Module implements ConfigProviderInterface
 {
@@ -40,7 +39,7 @@ class Module implements ConfigProviderInterface
                     $dbAdapter = $container->get(AdapterInterface::class);
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Model\Profile());
-                    return new TableGateway('profile', $dbAdapter, null, $resultSetPrototype);
+                    return new TableGateway('user_profile', $dbAdapter, null, $resultSetPrototype);
                 }
                 
                 ],

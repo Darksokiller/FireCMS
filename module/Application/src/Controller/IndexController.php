@@ -12,7 +12,15 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         
-        //return $this->view;
+        return $this->view;
+        
+        //return new ViewModel();
+    }
+    
+    public function forbiddenAction()
+    {
+        $response = $this->getResponse();
+        $response->setStatusCode(403);
         
         return new ViewModel();
     }

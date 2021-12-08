@@ -14,6 +14,7 @@ use Laminas\Permissions\Acl\ProprietaryInterface;
 
 class User implements RoleInterface, ResourceInterface, ProprietaryInterface
 {
+    protected $resourceId = 'user';
     public $id;
     public $userName;
     public $email;
