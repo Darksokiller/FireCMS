@@ -1,7 +1,6 @@
 <?php
 namespace User\Model;
 
-use Laminas\InputFilter\InputFilterAwareInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Filter\StripTags;
@@ -9,8 +8,11 @@ use Laminas\Filter\StringTrim;
 use Laminas\Filter\ToInt;
 use Laminas\Validator\StringLength;
 use User\Filter\PasswordFilter;
+use Laminas\Permissions\Acl\Role\RoleInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\ProprietaryInterface;
 
-class User implements InputFilterAwareInterface
+class User implements RoleInterface, ResourceInterface, ProprietaryInterface
 {
     public $id;
     public $userName;
@@ -33,7 +35,30 @@ class User implements InputFilterAwareInterface
         $this->regDate  = !empty($data ['regData']) ? $data ['regData'] : null;
         $this->active   = !empty($data ['active']) ? $data ['active'] : null;
         $this->verified = !empty($data ['verified']) ? $data ['verified'] : null;
+        return $this;
     }
+    
+    public function getOwnerId()
+    {
+        // TODO Auto-generated method stub
+        return $this->id;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \Laminas\Permissions\Acl\Role\RoleInterface::getRoleId()
+     */
+    public function getRoleId()
+    {
+        // TODO Auto-generated method stub
+        return $this->role;
+    }
+    public function getResourceId()
+    {
+        return $this->resourceId;
+    }
+    
+    
     
     public function getArrayCopy()
     {
@@ -176,6 +201,6 @@ class User implements InputFilterAwareInterface
     
     public function getPassword()
     {
-        return $this->Password;
+        return $this->password;
     }
 }
