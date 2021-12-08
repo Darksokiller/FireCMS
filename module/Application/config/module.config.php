@@ -21,6 +21,18 @@ return [
                     ],
                 ],
             ],
+            
+            'forbidden' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/forbidden',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'forbidden',
+                    ],
+                ],
+            ],
+            
             'application' => [
                 'type'    => Segment::class,
                 'options' => [

@@ -36,8 +36,8 @@ class AbstractController extends AbstractActionController
         
         
         $table = $sm->get('User\Model\UserTable');
-        
-        
+        $this->acl = $sm->get('Application\Permissions\PermissionsManager');
+        $this->acl = $this->acl->getAcl();
         $this->view = new ViewModel();
         
         switch ($this->authService->hasIdentity()) {
@@ -54,11 +54,11 @@ class AbstractController extends AbstractActionController
                 break;
         }
         
-       // $this->user->password = null;
+        $this->user->password = null;
         $this->view->user = $this->user;
-        
+        $this->view->acl = $this->acl;
         $this->action = $this->params()->fromRoute('action');
-        
+        $this->layout()->acl = $this->acl;
         $this->layout()->user = $this->user;
         $this->layout()->authenticated = $this->authenticated;
         $this->_init();
