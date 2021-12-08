@@ -29,7 +29,7 @@ class UserController extends AbstractController
        return $this->view;
     }
     
-    public function addAction()
+    public function registerAction()
     {
         $form = new UserForm();
         $form->get('submit')->setValue('Add');

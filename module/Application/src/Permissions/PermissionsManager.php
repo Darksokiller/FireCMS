@@ -8,7 +8,7 @@ use Laminas\Permissions\Acl\Assertion\OwnershipAssertion as Owner;
 class PermissionsManager
 {
     /**
-     *
+     * 
      * @var $acl Laminas\Permissions\Acl\Acl
      */
     public $acl;
@@ -19,12 +19,14 @@ class PermissionsManager
         $this->build();
         return $this;
     }
+    
     /**
      *
      * @return \Application\Permissions\PermissionsManager
      * Provides fluent interface
      */
-    public function build()
+    
+    public function build() 
     {
         $guest = new Role('guest');
         $this->acl->addRole($guest);
@@ -35,7 +37,6 @@ class PermissionsManager
         
         $this->acl->addResource('user');
         $this->acl->addResource('profile');
-        $this->acl->addResource('project');
         $this->acl->addResource('album');
         
         $this->acl->allow('guest', null, 'view');
@@ -47,20 +48,18 @@ class PermissionsManager
         $this->acl->deny('user', 'user', ['register', 'login', 'user.create.new']);
         
         $this->acl->allow('user', null, ['edit', 'delete'], new Owner());
-        //$this->acl->allow('user', 'album', 'album.create');
-        //$this->acl->allow('user', 'user', 'edit', new Owner());
-        //$this->acl->allow('user', 'profile', 'edit', new Owner());
-        //$this->acl->allow('user', 'project', 'edit', new Owner());
         $this->acl->allow('admin');
         $this->acl->allow('superAdmin');
         $this->acl->deny(['admin', 'superAdmin'], 'user', ['register.view', 'login.view']);
         
         return $this;
     }
-    public function getRoles()
+    
+    public function getRole()
     {
         return $this->roles;
     }
+    
     /**
      * @return the $acl
      */
@@ -72,7 +71,7 @@ class PermissionsManager
     /**
      * @param \Laminas\Permissions\Acl\Acl $acl
      */
-    public function setAcl($acl)
+    public function setAcl($acl) 
     {
         $this->acl = $acl;
     }
