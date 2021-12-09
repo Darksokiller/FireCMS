@@ -126,6 +126,7 @@ class UserController extends AbstractController
     public function deleteAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
+        
         if (!$id) {
             return $this->redirect()->toRoute('user');
         }
@@ -187,15 +188,11 @@ class UserController extends AbstractController
         if (! $form->isValid()) {
             return ['form' => $form];
         }
-        //var_dump($form->getData());
-//         die(__FILE__ . '::' . __LINE__);
+
         $user->exchangeArray($form->getData());
-        //var_dump($user);
-        //$this->table->login($user);
+
         if($this->table->login($user))
         {
-            //die('login successful');
-            //$this->redirect()->toUrl('/user/profile/view/'. $user->id);
             $this->flashMessenger()->addInfoMessage('Welcome back!!');
             $this->redirect()->toRoute('profile', ['id' => $user->id]);
         }

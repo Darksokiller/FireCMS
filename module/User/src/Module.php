@@ -5,7 +5,6 @@ use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Db\TableGateway\TableGateway;
-use Laminas\View\Model\ModelInterface;
 
 class Module implements ConfigProviderInterface
 {

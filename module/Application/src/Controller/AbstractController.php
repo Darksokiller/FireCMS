@@ -48,7 +48,7 @@ class AbstractController extends AbstractActionController
             default:
                 $user = new User();
                 $this->user = $user->exchangeArray([
-                    'userName' => 'Guset',
+                    'userName' => 'Guest',
                     'role' => 'guest'
                 ]);
                 break;

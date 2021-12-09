@@ -27,7 +27,8 @@
 		"laminas/laminas-session" : "^2.10.0",
 		"laminas/laminas-di" : "^3.2.2",
 		"laminas/laminas-permissions-acl": "^2.9",
-		"laminas/laminas-navigation": "^2.12"
+		"laminas/laminas-navigation": "^2.12",
+		"laminas/laminas-mail": "^2.15"
 	},
 	"autoload" : {
 		"psr-4" : {
