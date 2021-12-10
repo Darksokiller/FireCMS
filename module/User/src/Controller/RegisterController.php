@@ -117,3 +117,4 @@ class RegisterController extends AbstractController
         $mailer = $this->getEvent()->getApplication()->getServiceManager()->get('Application\Utilities\Mailer');
         $token = $this->params('token');
     }
+}

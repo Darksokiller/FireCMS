@@ -71,12 +71,6 @@ return [
     'navigation' => [
         'static' => [
             [
-                'label' => 'Home',
-                'route' => 'home',
-                'class' => 'nav-link',
-                'order' => '-1',
-            ],
-            [
                 'label' => 'User List',
                 'route' => 'user',
                 'class' => 'nav-link',
