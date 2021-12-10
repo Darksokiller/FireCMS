@@ -1,0 +1,21 @@
+
+<div class"<?= $this->navigation()->menu()->getUlClass() ?>">
+<?php
+foreach ($this->container as $page) :
+?>
+	<?php
+    if ($this->navigation()->accept($page)) :
+    ?>
+    
+    <?php 
+        echo $this->navigation()->menu()->htmlify($page) . PHP_EOL;
+    ?>
+  
+    <?php    
+    endif;
+    ?>
+    
+<?php   
+endforeach;
+?>
+</div>

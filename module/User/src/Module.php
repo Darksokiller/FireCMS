@@ -59,6 +59,17 @@ class Module implements ConfigProviderInterface
                         $container->get(Model\UserTable::class)
                         );
                 },   
+                
+                Controller\RegisterController::class => function($container) {
+                    return new Controller\RegisterController(
+                        $container->get(Model\UserTable::class)
+                        );
+                },
+                Controller\AdminController::class => function($container) {
+                    return new Controller\AdminController(
+                        $container->get(Model\UserTable::class)
+                        );
+                },    
                 ],
                 ];
     }

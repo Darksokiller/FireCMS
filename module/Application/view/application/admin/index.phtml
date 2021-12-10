@@ -1,0 +1,39 @@
+<?php
+if($this->acl->isAllowed($this->user, 'admin', 'admin.add.setting')):
+?>
+<span>
+<a href="<?= $this->url('app.admin.add.setting') ?>" class="btn btn-primary" role="button">Add New Setting</a>
+</span>
+<?php 
+endif;
+?>
+<?php
+//var_dump($form);
+$form->setAttribute('action', $this->url('app.admin', ['action' => 'index']));
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+
+		<?php
+        foreach($form as $element):
+        ?>
+		<div class="form-group">
+			<?php
+			//var_dump($form->get('submit'));
+			echo $this->formLabel($element);
+            echo $this->formElement($element);
+            echo $this->formElementErrors($element);
+            ?>
+		</div>
+		<?php
+        endforeach;
+        ?>
+		<?php 
+		$submit = new Laminas\Form\Element\Submit();
+		$submit->setName('submit');
+		$submit->setAttributes(['id' => 'submitbutton', 'value' => 'Save', 'class' => 'btn btn-primary']);
+		echo $this->formSubmit($submit);
+		?>
+<?php
+echo $this->form()->closeTag();
+?>

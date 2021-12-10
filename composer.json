@@ -28,7 +28,9 @@
 		"laminas/laminas-di" : "^3.2.2",
 		"laminas/laminas-permissions-acl": "^2.9",
 		"laminas/laminas-navigation": "^2.12",
-		"laminas/laminas-mail": "^2.15"
+		"laminas/laminas-mail": "^2.15",
+		"ccampbell/chromephp": "^4.1",
+		"firephp/firephp-core": "^0.5.3"
 	},
 	"autoload" : {
 		"psr-4" : {

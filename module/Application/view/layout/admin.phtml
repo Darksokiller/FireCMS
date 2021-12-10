@@ -7,13 +7,11 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?= $this->headTitle($this->appSettings->appName)->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headTitle('Aurora CMS')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?= $this->headMeta()
-            ->prependName('keywords', $this->appSettings->seoKeyWords)
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-            
         ?>
 
         <!-- Le styles -->
@@ -22,7 +20,7 @@
                                 'type' => 'image/vnd.microsoft.icon',
                                 'href' => $this->basePath() . '/img/favicon.ico'
                             ])
-            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/admin.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
 ?>
 
@@ -54,33 +52,18 @@
                 $this->navigation()->setAcl($this->acl);
                 $this->navigation()->setRole($this->user->role);
                 $this->navigation()->menu()->setUlClass('navbar-nav');
-                echo $this->navigation('Laminas\Navigation\Static')->menu();
+                echo $this->navigation('Laminas\Navigation\Admin')->menu();
                 ?>
                 </div>
             </div>
         </nav>
         <div class="container">
-       
-        		<?php 
-        		//var_dump($this->messageType);
-        		//echo $this->flashMessenger()->render($this->messageType);
-        		switch($this->hasMessages){
-        		    case true :
-        		        echo $this->flashMessenger()->render('info');
-        		        break;
-        		    default:
-        		        
-        		        break;
-        		}
-        		?>
-        
-        
             <?= $this->content ?>
             <hr>
             <footer>
                 <p>
                     &copy; <?= date('Y') ?>
-                    <a href="<?=$this->appSettings->copyRightLink; ?>"><?=$this->appSettings->copyRightText; ?></a> | <?=$this->appSettings->footerText; ?>
+                    <a href="http://webinertia.net/aurora/">Aurora Content Management Systems</a> | Developed by Webinertia Data Systems
                 </p>
             </footer>
         </div>

@@ -7,6 +7,8 @@ namespace Application;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use Application\Controller\Plugin\CreateHttpForbiddenModel;
+use Application\Controller\Plugin\CreateHttpForbiddenFactory;
 
 return [
     'router' => [
@@ -21,7 +23,6 @@ return [
                     ],
                 ],
             ],
-            
             'forbidden' => [
                 'type'    => Literal::class,
                 'options' => [
@@ -32,7 +33,6 @@ return [
                     ],
                 ],
             ],
-            
             'application' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -43,11 +43,64 @@ return [
                     ],
                 ],
             ],
+            'app.admin' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/cms/admin[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\AdminController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'app.admin.add.setting' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/cms/admin/addsetting',
+                    'defaults' => [
+                        'controller' => Controller\AdminController::class,
+                        'action'     => 'addsetting',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\AdminController::class => InvokableFactory::class,
+        ],
+    ],
+    'navigation' => [
+        'static' =>[
+            [
+                'label' => 'Home',
+                'route' => 'home',
+                'class' => 'nav-link',
+                'order' => '-10',
+            ],
+            [
+                'label' => 'Admin',
+                'route' => 'app.admin',
+                'class' => 'nav-link',
+                'resource' => 'admin',
+                'privilege' => 'admin.access',
+            ],
+        ],
+        'admin' => [
+            [
+                'label' => 'Home',
+                'route' => 'home',
+                'class' => 'nav-link',
+                'order' => '-10',
+            ],
+            [
+                'label' => 'App Settings',
+                'route' => 'app.admin',
+                'class' => 'nav-link',
+                'resource' => 'admin',
+                'privilege' => 'admin.access',
+            ],
         ],
     ],
     'view_manager' => [
