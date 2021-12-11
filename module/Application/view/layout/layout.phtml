@@ -60,22 +60,8 @@
             </div>
         </nav>
         <div class="container">
-       
-        		<?php 
-        		//var_dump($this->messageType);
-        		//echo $this->flashMessenger()->render($this->messageType);
-        		switch($this->hasMessages){
-        		    case true :
-        		        echo $this->flashMessenger()->render('info');
-        		        break;
-        		    default:
-        		        
-        		        break;
-        		}
-        		?>
-        
-        
-            <?= $this->content ?>
+       		<?= 
+       		$this->content ?>
             <hr>
             <footer>
                 <p>

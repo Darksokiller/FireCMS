@@ -12,15 +12,7 @@
  * file.
  */
 
-return [
-    'db' => [
-        'driver' => 'Pdo',
-        'dsn'    => 'mysql:dbname=firecms;host=localhost;charset=utf8',
-        //'dbname' => 'aurora-laminas',
-        'username' => 'Evan',
-        'password' => 'Hank2001'
-    ],
-    
+return [    
     'session' => [
     //         'config' => [
         //             'class' => \User\Model\UsersSessionConfig::class,
