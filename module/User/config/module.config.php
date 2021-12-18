@@ -66,8 +66,6 @@ return [
             ],
         ],
     ],
-    
-    
     'navigation' => [
         'static' => [
             [
@@ -112,7 +110,6 @@ return [
             ],
         ],
     ],
-    
     'view_manager' => [
         'template_path_stack' => [
             'user' => __DIR__ . '/../view',

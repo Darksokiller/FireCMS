@@ -26,12 +26,13 @@
 		"laminas/laminas-mvc-middleware" : "^2.0.0",
 		"laminas/laminas-session" : "^2.10.0",
 		"laminas/laminas-di" : "^3.2.2",
-		"laminas/laminas-permissions-acl": "^2.9",
-		"laminas/laminas-navigation": "^2.12",
-		"laminas/laminas-mail": "^2.15",
-		"ccampbell/chromephp": "^4.1",
-		"firephp/firephp-core": "^0.5.3",
-		"laminas/laminas-captcha": "^2.11"
+		"laminas/laminas-permissions-acl" : "^2.9",
+		"laminas/laminas-navigation" : "^2.12",
+		"laminas/laminas-mail" : "^2.15",
+		"ccampbell/chromephp" : "^4.1",
+		"firephp/firephp-core" : "^0.5.3",
+		"laminas/laminas-captcha" : "^2.11",
+		"twbs/bootstrap": "^5.1"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -47,6 +48,12 @@
 				"module/User/src/Controller",
 				"module/User/src/Form",
 				"module/User/src/Model"
+			],
+			"Product\\" : [
+				"module/Product/src",
+				"module/Product/src/Coontroller",
+				"module/Product/src/Form",
+				"module/Product/src/Model"
 			]
 		}
 	},
