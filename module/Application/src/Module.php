@@ -58,7 +58,7 @@ class Module
         $settings = $sm->get('Application\Model\SettingsTableGateway');
         $handler = new Config($settings->fetchall());
         $sm->setService('FirecmsSettings', $handler);
-        //date_default_timezone_set($handler->timeZone);
+        date_default_timezone_set($handler->timeZone);
     }
     /*
      * @var $e Laminas\\Mvc\Event
